@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     public static bool Game_over;
-
+    private string sceneName;
 
     private void Awake()
     {
@@ -19,15 +19,28 @@ public class GameManager : MonoBehaviour
         Game_over = false;
     }
 
+    private void Start()
+    {
+        sceneName = SceneManager.GetActiveScene().name;
+    }
+
     private void Update()
     {
 
+        if(sceneName == "startScene")
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                SceneManager.LoadScene("Main");
+            }
+        }
+
        if (Game_over)
         {
-            Debug.Log("game over");
-            if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
+            //Debug.Log("game over");
+            if (showScoreBoard.showed && (Input.GetMouseButton(0) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space)))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene("startScene");
             }
         }
             
