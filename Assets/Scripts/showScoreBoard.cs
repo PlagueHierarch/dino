@@ -31,7 +31,7 @@ public class showScoreBoard : MonoBehaviour
     }
     private void Update()
     {
-        if (GameManager.Game_over && !showed)
+        if (GameManager.Game_over && !showed && ScoreManager.saved)
         {
             for (int i = 0; i < 7; i++)
             {
@@ -43,7 +43,7 @@ public class showScoreBoard : MonoBehaviour
             panelColor.a = 0;
             StartCoroutine(boardCoroutine());
             
-            Debug.Log(showed);
+            //Debug.Log(showed);
         }
     }
 

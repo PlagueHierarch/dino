@@ -15,6 +15,7 @@ public class FeverManager : MonoBehaviour
 
     public Slider feverSlider;
     public AudioSource audioS;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +60,7 @@ public class FeverManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         StartCoroutine(pitchDown());
+        animator.speed = 1;
         fever_On = false;
     }
 
@@ -89,6 +91,7 @@ public class FeverManager : MonoBehaviour
         if (feverGauge >= 100)
         {
             StartCoroutine(pitchUp());
+            animator.speed = 2;
             curGauge = 100;
             fever_On = true;
             //Debug.Log("feverTime");

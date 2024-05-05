@@ -15,12 +15,13 @@ public class ScoreData
 public class ScoreManager : MonoBehaviour
 {
     public static int score = 0;
+    public int multiplier;
     public Text scoreText;
 
     public static List<string> playerScores = new List<string>();
     private string path;
     public ScoreData scoreData;
-    private bool saved = false;
+    public static bool saved = false;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class ScoreManager : MonoBehaviour
     {
         score = 0;
         saved = false;
+        multiplier = 1;
 
         if(File.Exists(path))
         {
@@ -56,6 +58,9 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
+        if (FeverManager.fever_On) 
+            multiplier = 2;
+
         if (GameManager.Game_over && !saved)
         {
             AddScore(score);
@@ -67,7 +72,7 @@ public class ScoreManager : MonoBehaviour
     {
         while (!GameManager.Game_over)
         {
-            score += (int)(1 * ObjectMover.speed);
+            score += (int)(multiplier * ObjectMover.speed);
             //Debug.Log(ObjectMover.speed);
             scoreText.text = score.ToString();
             yield return new WaitForSeconds(0.1f);
@@ -78,7 +83,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int score)
     {
         playerScores.Add(score.ToString());
-        playerScores.Sort((a, b) => b.CompareTo(a));
+        playerScores.Sort((a, b) => int.Parse(b).CompareTo(int.Parse(a)));
 
         if(playerScores.Count > 7)
         {
